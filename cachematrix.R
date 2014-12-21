@@ -9,12 +9,15 @@
 # setinverse() -> sets the inverse matrix
 # getinverse() -> retrieves the inverse matrix
 makeCacheMatrix <- function(x = matrix()) {
+  # set the initial value of the inverse matrix to null
   inverse <- NULL
+  
   set <- function(y) {
     x <<- y
+    # when setting a new value for the matrix, clear the inverse
     inverse <<- NULL
   }
-  
+
   get <- function() x
   setinverse <- function(i) inverse <<- i
   getinverse <- function() inverse
@@ -30,10 +33,11 @@ makeCacheMatrix <- function(x = matrix()) {
 # it is returned instead of re-solving.
 cacheSolve <- function(x, ...) {
   inverse <- x$getinverse()
+  # if there is a non-null inverse, we can just return it
   if(!is.null(inverse)) {
-    message("getting cached data")
     return(inverse)
   }
+  # fall-through: no inverse calculated yet, so solve and store it before returning the value
   real_mat <- x$get()
   inverse <- solve(real_mat)
   x$setinverse(inverse)
