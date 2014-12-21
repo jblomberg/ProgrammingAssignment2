@@ -1,8 +1,13 @@
-## Put comments here that give an overall description of what your
-## functions do
+# Implementation of a CacheMatrix object, and a inverse solver
+# function which supports caching of the result.
 
-## Write a short comment describing this function
-
+# Creates a wrapper object around a matrix, supporting
+# the following functions:
+# get() -> returns the original matrix
+# set() -> sets a new value for the matrix, and clears any cached inverse
+#          matrix
+# setinverse() -> sets the inverse matrix
+# getinverse() -> retrieves the inverse matrix
 makeCacheMatrix <- function(x = matrix()) {
   inverse <- NULL
   set <- function(y) {
@@ -20,10 +25,10 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
-
+# Accepts a CacheMatrix, and returns the inverse of its internal matrix.
+# If the CacheMatrix has already cached an inverse, 
+# it is returned instead of re-solving.
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
   inverse <- x$getinverse()
   if(!is.null(inverse)) {
     message("getting cached data")
